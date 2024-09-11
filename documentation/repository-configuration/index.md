@@ -99,11 +99,11 @@ When an instance of `JaversRedisRepository` is created, it subscribes to keyspac
 
 Upon receiving a key expiration event, the `CdoSnapshotKeyExpireListener` identifies the expired key and removes its entries from all relevant sets, such as `jv_snapshots_keys` and `jv_snapshots_keys:<Entity Name>`.
 
-**Lua Script for Cleanup**
+**Expired Keys Cleanup**
 
 A significant challenge arises if Redis keys expire when there is no active `CdoSnapshotKeyExpireListener` running. In this scenario, expired key entries will remain in the sets, leading to potential data inconsistencies.
 
-To address this challenge, we have introduced the Lua script `cleanExpiredSnapshots.lua` and the public method `cleanExpiredSnapshotsKeysSets` in JaversRedisRepository that can be called to perform the necessary cleanup. This ensures that expired keys are properly removed from all relevant sets, even if the listener is not active at the time of expiration.
+To address this challenge, we have introduced the public method `cleanExpiredSnapshotsKeysSets` in JaversRedisRepository that can be called to perform the necessary cleanup. This ensures that expired keys are properly removed from all relevant sets, even if the listener is not active at the time of expiration.
 
 <h2 id="mongodb-configuration">MongoDB</h2>
 **Dependency**<br/>
